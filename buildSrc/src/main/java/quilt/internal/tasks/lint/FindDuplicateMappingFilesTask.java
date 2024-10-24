@@ -6,6 +6,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskAction;
 import quilt.internal.Constants.Groups;
+import quilt.internal.plugin.MappingVerificationPlugin;
 import quilt.internal.tasks.DefaultMappingsTask;
 import quilt.internal.tasks.MappingsDirConsumingTask;
 
@@ -17,7 +18,10 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public abstract class FindDuplicateMappingFilesTask extends DefaultMappingsTask implements MappingsDirConsumingTask {
-    public static final String FIND_DUPLICATE_MAPPING_FILES_TASK_NAME = "findDuplicateMappingFiles";
+    /**
+     * {@linkplain org.gradle.api.tasks.TaskContainer#register Registered} by
+     * {@link MappingVerificationPlugin}.
+     */public static final String FIND_DUPLICATE_MAPPING_FILES_TASK_NAME = "findDuplicateMappingFiles";
 
     private static final Pattern EXPECTED_CLASS =
         Pattern.compile("^CLASS (?:net/minecraft|com/mojang/blaze3d)/(?:\\w+/)*\\w+(?= )");

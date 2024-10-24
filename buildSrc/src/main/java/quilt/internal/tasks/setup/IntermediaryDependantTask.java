@@ -2,6 +2,7 @@ package quilt.internal.tasks.setup;
 
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.specs.Spec;
+import quilt.internal.plugin.MapIntermediaryPlugin;
 import quilt.internal.plugin.QuiltMappingsPlugin;
 import quilt.internal.tasks.MappingsTask;
 
@@ -11,7 +12,7 @@ import quilt.internal.tasks.MappingsTask;
  * <p>
  * If {@link QuiltMappingsPlugin QuiltMappingsPlugin} is applied,
  * {@code IntermediaryDependantTask}s will {@linkplain org.gradle.api.Task#onlyIf(Spec) only run} if
- * {@value QuiltMappingsPlugin#INTERMEDIARY_MAPPINGS_CONFIGURATION_NAME}
+ * {@value MapIntermediaryPlugin#INTERMEDIARY_MAPPINGS_CONFIGURATION_NAME}
  * {@link org.gradle.api.artifacts.Configuration Configuration} successfully
  * {@linkplain Configuration#resolve() resolves}.
  */
