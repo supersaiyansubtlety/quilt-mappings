@@ -52,7 +52,8 @@ import static quilt.internal.util.ProviderUtil.toOptional;
  * </ul>
  */
 public abstract class EnigmaMappingsPlugin implements MappingsProjectPlugin {
-    public static final String ENIGMA_RUNTIME_CONFIGURATION_NAME = "enigmaRuntime";
+    public static final String ENIGMA_SWING_CONFIGURATION_NAME = "enigmaSwing";
+    public static final String ENIGMA_SERVER_CONFIGURATION_NAME = "enigmaServer";
 
     public static final String DEFAULT_ENIGMA_JVM_MEMORY_ARG = "-Xmx2048m";
 
@@ -67,7 +68,30 @@ public abstract class EnigmaMappingsPlugin implements MappingsProjectPlugin {
 
     @Override
     public void apply(@NotNull Project project) {
-        final Configuration enigmaRuntime = project.getConfigurations().create(ENIGMA_RUNTIME_CONFIGURATION_NAME);
+        final ConfigurationContainer configurations = project.getConfigurations();
+
+        final Configuration enigmaSwing = configurations.create(ENIGMA_SWING_CONFIGURATION_NAME);
+        final Configuration enigmaPlugin = configurations.create(ENIGMA_SERVER_CONFIGURATION_NAME);
+
+        // project.getDependencies().add(
+        //     ENIGMA_SWING_CONFIGURATION_NAME,
+        //     "org.quiltmc.internal:enigma-swing"
+        // );
+        //
+        // project.getDependencies().add(
+        //     ENIGMA_PLUGIN_CONFIGURATION_NAME,
+        //     "org.quiltmc.internal:enigma-server"
+        // );
+
+        project.getDependencies().add(
+            ENIGMA_SWING_CONFIGURATION_NAME,
+            "org.quiltmc.internal:classpath-holders:enigma-swing"
+        );
+
+        project.getDependencies().add(
+            ENIGMA_SERVER_CONFIGURATION_NAME,
+            "org.quiltmc.internal:classpath-holders:enigma-plugin"
+        );
 
         final PluginContainer plugins = project.getPlugins();
 
@@ -88,9 +112,11 @@ public abstract class EnigmaMappingsPlugin implements MappingsProjectPlugin {
         final TaskContainer tasks = project.getTasks();
 
         tasks.withType(AbstractEnigmaMappingsTask.class).configureEach(task -> {
-            task.classpath(enigmaRuntime);
-
             task.jvmArgs(DEFAULT_ENIGMA_JVM_MEMORY_ARG);
+        });
+
+        tasks.withType(EnigmaMappingsTask.class).configureEach(task -> {
+            task.classpath(enigmaSwing);
         });
 
         tasks.register(
@@ -112,6 +138,8 @@ public abstract class EnigmaMappingsPlugin implements MappingsProjectPlugin {
         );
 
         tasks.withType(EnigmaMappingsServerTask.class).configureEach(task -> {
+            task.classpath(enigmaPlugin);
+
             final ProviderFactory providers = this.getProviders();
 
             task.getPort().convention(

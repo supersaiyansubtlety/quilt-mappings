@@ -69,6 +69,16 @@ public abstract class MapV2Plugin extends DefaultTaskedMappingsProjectPlugin<Map
     protected Tasks applyImpl(@NotNull Project project) {
         final Configuration unpick = project.getConfigurations().create(UNPICK_CONFIGURATION_NAME);
 
+        // project.getDependencies().add(
+        //     UNPICK_CONFIGURATION_NAME,
+        //     "org.quiltmc.internal:unpick"
+        // );
+
+        project.getDependencies().add(
+            UNPICK_CONFIGURATION_NAME,
+            "org.quiltmc.internal:classpath-holders:unpick"
+        );
+
         // apply required plugins and save their registered objects
         final PluginContainer plugins = project.getPlugins();
 

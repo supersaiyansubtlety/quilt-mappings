@@ -1,0 +1,30 @@
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+
+    repositories {
+        mavenCentral()
+
+        maven {
+            name "Quilt Repository"
+            url "https://maven.quiltmc.org/repository/release"
+        }
+
+        maven {
+            name "Fabric Repository"
+            url 'https://maven.fabricmc.net'
+        }
+
+        // TODO remove when ASM fix is released
+        maven {
+            url = "https://repository.ow2.org/nexus/content/repositories/snapshots/"
+        }
+    }
+}
+
+// include 'unpick'
+// include 'enigma-swing'
+// include 'enigma-server'

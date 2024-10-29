@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+configurations {
+    unpick {
+        outgoing {
+            capability("$group:unpick:$version")
+        }
+    }
+
+    enigmaSwing {
+        outgoing {
+            capability("$group:enigma-swing:$version")
+        }
+    }
+
+    enigmaServer {
+        outgoing {
+            capability("$group:enigma-server:$version")
+        }
+    }
+}
+
+dependencies {
+    unpick implementation(libs.unpick.cli.get())
+
+    enigmaSwing implementation(libs.enigma.swing.get())
+
+    enigmaServer implementation(libs.enigma.server.get())
+
+    // unpick libs.unpick.cli
+    //
+    // enigmaSwing libs.enigma.swing
+    //
+    // enigmaServer libs.enigma.server
+}
