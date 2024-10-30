@@ -7,31 +7,43 @@ configurations {
         outgoing {
             capability("$group:unpick:$version")
         }
+
+        // components.java.addVariantsFromConfiguration(unpick) { }
     }
 
     enigmaSwing {
         outgoing {
             capability("$group:enigma-swing:$version")
         }
+
+        // components.java.addVariantsFromConfiguration(enigmaSwing) { }
     }
 
     enigmaServer {
         outgoing {
             capability("$group:enigma-server:$version")
         }
+
+        // components.java.addVariantsFromConfiguration(enigmaServer) { }
     }
 }
 
+// components.java.addVariantsFromConfiguration(configurations.unpick) { }
+
 dependencies {
-    unpick implementation(libs.unpick.cli.get())
-
-    enigmaSwing implementation(libs.enigma.swing.get())
-
-    enigmaServer implementation(libs.enigma.server.get())
-
-    // unpick libs.unpick.cli
+    // unpick implementation(libs.unpick.cli.get())
     //
-    // enigmaSwing libs.enigma.swing
+    // enigmaSwing implementation(libs.enigma.swing.get())
     //
-    // enigmaServer libs.enigma.server
+    // enigmaServer implementation(libs.enigma.server.get())
+
+    unpick libs.unpick.cli
+
+    enigmaSwing libs.enigma.swing
+
+    enigmaServer libs.enigma.server
 }
+
+components.java.addVariantsFromConfiguration(configurations.unpick) { }
+components.java.addVariantsFromConfiguration(configurations.enigmaSwing) { }
+components.java.addVariantsFromConfiguration(configurations.enigmaServer) { }
